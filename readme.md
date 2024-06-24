@@ -30,6 +30,10 @@ It collects real-time data from sensors and devices, processes and displays this
 4. **RFID reader**: Uses a RC522 to read RF Tags ID.
 5. **LCD monitor**: Implemented LCD I2C to monitor processes data.
 
+## Block Diagram
+<p align="center">
+<img src="./assets/block_diagram.png" width="720px"/>
+</p>
 
 ## Roadmap
 - **[X]** When the serial data is received from supervisory system, display it on the LCD for a brief moment.
