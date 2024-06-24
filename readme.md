@@ -1,6 +1,6 @@
 - [X] When the serial data is received, display it on the LCD for a brief moment.
 - [X] Monitor humidity && temperature, display it on the LCD.
-- [ ] Serial send humidity && temperature.
+- [X] Serial send humidity && temperature.
 - [ ] Monitor joystick X | Y position, display it on the LCD.
 - [ ] Serial send joystick X | Y position.
 - [ ] When RFID tags is reded, display its id on the LCD for a brief moment.

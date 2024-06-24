@@ -49,6 +49,14 @@ void serial_setup()
   Serial.begin(9600);
 }
 
+void serial_send_general_info()
+{
+  Serial.print("44 48 48 55 ");
+  Serial.println(humidity, HEX);
+  Serial.print("44 48 54 45 ");
+  Serial.println(temperature, HEX);
+}
+
 void dht11_read()
 {
   dht11.readTemperatureHumidity(temperature, humidity);
@@ -71,6 +79,5 @@ void loop()
   }
   dht11_read();
   lcd_print_general_info();
-
-  delay(100);
+  serial_send_general_info();
 }
