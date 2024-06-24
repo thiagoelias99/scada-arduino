@@ -30,6 +30,21 @@ int joy_y = 0;
 MFRC522 mfrc522(RF_SS_PIN, RF_RST_PIN);
 byte rf_read_iu[4];
 
+//Piezzo
+#define PIEZZO 2
+
+void piezzo_setup()
+{
+  pinMode(PIEZZO, OUTPUT);
+}
+
+void piezzo_play(int frequency = 800, int duration = 200)
+{
+  tone(PIEZZO, frequency, duration);
+  delay(250);
+  tone(PIEZZO, frequency, duration);
+}
+
 void rfid_setup()
 {
   SPI.begin();
@@ -129,6 +144,8 @@ void rfid_read()
   }
   mfrc522.PICC_HaltA();
 
+  piezzo_play();
+
   Serial.print("52 46 49 44 ");
   for (byte i = 0; i < 4; i++)
   {
@@ -156,6 +173,7 @@ void setup()
   serial_setup();
   joystick_setup();
   rfid_setup();
+  piezzo_setup();
 }
 
 void loop()
@@ -166,6 +184,9 @@ void loop()
     command.trim();
 
     lcd_print_serial_command();
+    piezzo_play();
+    delay(1000);
+    lcd.clear();
   }
   dht11_read();
   joystick_read();

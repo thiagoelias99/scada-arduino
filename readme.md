@@ -5,8 +5,8 @@
 - [X] Serial send joystick X | Y position.
 - [X] When RFID tags is reded, display its id on the LCD for a brief moment.
 - [X] Serial send tag Id.
-- [ ] Bip when serial data is received.
-- [ ] Bip when RFID tag is reded.
+- [X] Bip when serial data is received.
+- [X] Bip when RFID tag is reded.
 
 ### Serial Patterns
 - ***Humidity*** (send): 44 48 48 55 (VALUE IN HEX)
