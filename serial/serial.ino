@@ -1,10 +1,18 @@
-#include <LiquidCrystal_I2C.h> //Marco Schwartz
+#include <LiquidCrystal_I2C.h>
+#include <DHT11.h>
 
+// LCD
 #define LCD_ADDRESS 0x27
 #define LCD_COLUMNS 16
 #define LCD_LINES 2
 
 LiquidCrystal_I2C lcd(LCD_ADDRESS, LCD_COLUMNS, LCD_LINES);
+
+// DHT11
+#define DHTPIN 3
+DHT11 dht11(3);
+int temperature = 0;
+int humidity = 0;
 
 String command = "";
 
@@ -23,9 +31,27 @@ void lcd_print_serial_command()
   lcd.print(command);
 }
 
+void lcd_print_general_info()
+{
+  // lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("T: ");
+  lcd.print(temperature);
+  lcd.print("C");
+  lcd.setCursor(0, 1);
+  lcd.print("H: ");
+  lcd.print(humidity);
+  lcd.print("%");
+}
+
 void serial_setup()
 {
   Serial.begin(9600);
+}
+
+void dht11_read()
+{
+  dht11.readTemperatureHumidity(temperature, humidity);
 }
 
 void setup()
@@ -43,4 +69,8 @@ void loop()
 
     lcd_print_serial_command();
   }
+  dht11_read();
+  lcd_print_general_info();
+
+  delay(100);
 }

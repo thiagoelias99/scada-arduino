@@ -1,5 +1,5 @@
 - [X] When the serial data is received, display it on the LCD for a brief moment.
-- [ ] Monitor humidity && temperature, display it on the LCD.
+- [X] Monitor humidity && temperature, display it on the LCD.
 - [ ] Serial send humidity && temperature.
 - [ ] Monitor joystick X | Y position, display it on the LCD.
 - [ ] Serial send joystick X | Y position.
