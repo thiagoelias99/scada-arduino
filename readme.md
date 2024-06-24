@@ -3,16 +3,20 @@
 - [X] Serial send humidity && temperature.
 - [X] Monitor joystick X | Y position, display it on the LCD.
 - [X] Serial send joystick X | Y position.
-- [ ] When RFID tags is reded, display its id on the LCD for a brief moment.
-- [ ] Serial send tag Id.
+- [X] When RFID tags is reded, display its id on the LCD for a brief moment.
+- [X] Serial send tag Id.
+- [ ] Bip when serial data is received.
+- [ ] Bip when RFID tag is reded.
 
 ### Serial Patterns
-- Humidity (send): 44 48 48 55 (VALUE IN HEX)
+- ***Humidity*** (send): 44 48 48 55 (VALUE IN HEX)
   - 44 48 48 55 3C -> 60%
   - 44 48 48 55 14 -> 20%
-- Temperature (send): 44 48 54 45 (VALUE IN HEX)
+- ***Temperature*** (send): 44 48 54 45 (VALUE IN HEX)
   - 44 48 54 45 19 -> 25%
   - 44 48 54 45 25 -> 37%
-- Joystick (send): 4A 59 58 49 (X VALUE IN HEX) (Y VALUE IN HEX)
+- ***Joystick*** (send): 4A 59 58 49 (X VALUE IN HEX) (Y VALUE IN HEX)
   - 4A 59 58 49 1E 36 -> X=30 Y=70
   - 4A 59 58 49 32 00 -> X=50 Y=0
+- ***RFID*** (send): 52 46 49 44 (ID IN HEX)
+  - 52 46 49 44 53 58 68 20 -> Tag ID = 83 88 104 32
