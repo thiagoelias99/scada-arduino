@@ -14,14 +14,14 @@
 
 ### This project uses an Arduino Uno board to acquire and send data to a remote supervisory system. It was created for the purpose of study and technological improvement.
 
-***
-
 ## What is SCADA?
 A supervisory system, also known as SCADA (Supervisory Control and Data Acquisition), is a software and hardware system that enables the monitoring and control of large-scale industrial or infrastructure processes.
 
 It collects real-time data from sensors and devices, processes and displays this information, allowing operators to make informed decisions and perform control actions.
 
-***
+## Related Projects
+### [SCADA - Rust Supervisory](https://github.com/thiagoelias99/scada-supervisory-rust/tree/main)
+Rust CLI supervisory used to monitor this project.
 
 ## Processes
 1. **Humidity monitoring**: Uses a DHT11 sensor to acquire humidity data.
