@@ -33,43 +33,37 @@ byte rf_read_iu[4];
 //Piezzo
 #define PIEZZO 2
 
-void piezzo_setup()
-{
+void piezzo_setup() {
   pinMode(PIEZZO, OUTPUT);
 }
 
-void piezzo_play(int frequency = 800, int duration = 200)
-{
+void piezzo_play(int frequency = 800, int duration = 200) {
   tone(PIEZZO, frequency, duration);
   delay(250);
   tone(PIEZZO, frequency, duration);
 }
 
-void rfid_setup()
-{
+void rfid_setup() {
   SPI.begin();
   mfrc522.PCD_Init();
 }
 
 String command = "";
 
-void lcd_setup()
-{
+void lcd_setup() {
   lcd.init();
   lcd.backlight();
   lcd.clear();
 }
 
-void lcd_print_serial_command()
-{
+void lcd_print_serial_command() {
   lcd.clear();
   lcd.print("Serial Command");
   lcd.setCursor(0, 1);
   lcd.print(command);
 }
 
-void lcd_print_general_info()
-{
+void lcd_print_general_info() {
   lcd.setCursor(0, 0);
   lcd.print("T: ");
   lcd.print(temperature);
@@ -86,60 +80,58 @@ void lcd_print_general_info()
   lcd.print(joy_y);
 }
 
-void serial_setup()
-{
+void serial_setup() {
   Serial.begin(9600);
 }
 
-void serial_send_general_info()
-{
+void serial_send_general_info() {
   Serial.print("44 48 48 55 ");
-  Serial.println(humidity, HEX);
+  serial_print_int_to_hex(humidity, true);
   Serial.print("44 48 54 45 ");
-  Serial.println(temperature, HEX);
+  serial_print_int_to_hex(temperature, true);
   Serial.print("4A 59 58 49 ");
-  Serial.print(joy_x, HEX);
+  serial_print_int_to_hex(joy_x, false);
   Serial.print(" ");
-  Serial.println(joy_y, HEX);
+  serial_print_int_to_hex(joy_y, true);
 }
 
-void dht11_read()
-{
-  if (dht_read_count == 0)
-  {
+void serial_print_int_to_hex(int value, bool new_line) {
+  char buffer[3];
+  sprintf(buffer, "%02X", value);
+  if (new_line) {
+    Serial.println(buffer);
+  } else {
+    Serial.print(buffer);
+  }
+}
+
+void dht11_read() {
+  if (dht_read_count == 0) {
     dht11.readTemperatureHumidity(temperature, humidity);
     dht_read_count = dht_read_interval;
-  }
-  else
-  {
+  } else {
     dht_read_count--;
   }
 }
 
-void joystick_setup()
-{
+void joystick_setup() {
   pinMode(JOY_X, INPUT);
   pinMode(JOY_Y, INPUT);
 }
 
-void joystick_read()
-{
+void joystick_read() {
   joy_x = map(analogRead(JOY_X), 0, 1023, 0, 100);
   joy_y = map(analogRead(JOY_Y), 0, 1023, 0, 100);
 }
 
-void rfid_read()
-{
-  if (!mfrc522.PICC_IsNewCardPresent())
-  {
+void rfid_read() {
+  if (!mfrc522.PICC_IsNewCardPresent()) {
     return;
   }
-  if (!mfrc522.PICC_ReadCardSerial())
-  {
+  if (!mfrc522.PICC_ReadCardSerial()) {
     return;
   }
-  for (byte i = 0; i < 4; i++)
-  {
+  for (byte i = 0; i < 4; i++) {
     rf_read_iu[i] = mfrc522.uid.uidByte[i];
   }
   mfrc522.PICC_HaltA();
@@ -147,9 +139,8 @@ void rfid_read()
   piezzo_play();
 
   Serial.print("52 46 49 44 ");
-  for (byte i = 0; i < 4; i++)
-  {
-    Serial.print(rf_read_iu[i], HEX);
+  for (byte i = 0; i < 4; i++) {
+    serial_print_int_to_hex(rf_read_iu[i], false);
     Serial.print(" ");
   }
   Serial.println();
@@ -157,8 +148,7 @@ void rfid_read()
   lcd.clear();
   lcd.print("RFID: ");
   lcd.setCursor(0, 1);
-  for (byte i = 0; i < 4; i++)
-  {
+  for (byte i = 0; i < 4; i++) {
     lcd.print(rf_read_iu[i]);
     lcd.print(" ");
   }
@@ -167,8 +157,7 @@ void rfid_read()
   lcd.clear();
 }
 
-void setup()
-{
+void setup() {
   lcd_setup();
   serial_setup();
   joystick_setup();
@@ -176,10 +165,8 @@ void setup()
   piezzo_setup();
 }
 
-void loop()
-{
-  if (Serial.available() > 0)
-  {
+void loop() {
+  if (Serial.available() > 0) {
     command = Serial.readStringUntil('\n');
     command.trim();
 
